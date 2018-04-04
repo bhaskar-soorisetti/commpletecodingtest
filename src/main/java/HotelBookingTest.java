@@ -27,12 +27,40 @@ public class HotelBookingTest {
         setDriverPath();
 
         driver.get("https://www.cleartrip.com/");
+        
+        //wait for page load
+        
+        waitFor(5000);
         hotelLink.click();
-
-        localityTextBox.sendKeys("Indiranagar, Bangalore");
-
+        
+        //wait for page load
+        
+        waitFor(2000);
+        
+        //for selection of item in list
+        
+        Actions act=new Actions(driver);
+        act.sendKeys(localityTextBox,"Indiranagar, Bangalore").build().perform();
+        waitFor(5000);
+        act.sendKeys(Keys.ENTER).build().perform();
+        waitFor(2000);
+        
+        //this statement for clear info  checkin and checkout dates
+        
+        act.sendKeys(Keys.ESCAPE).build().perform();
+        waitFor(2000);
+        act.sendKeys(Keys.ESCAPE).build().perform();
+        waitFor(2000);
+        
+        //this statement for selection travallers
+        
         new Select(travellerSelection).selectByVisibleText("1 room, 2 adults");
+        waitFor(2000);
+        
+        //this statement for click search 
+        
         searchButton.click();
+        waitFor(2000);
 
         driver.quit();
 
@@ -49,5 +77,11 @@ public class HotelBookingTest {
             System.setProperty("webdriver.chrome.driver", "chromedriver_linux");
         }
     }
-
+    private void waitFor(int durationInMilliSeconds) {
+        try {
+            Thread.sleep(durationInMilliSeconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+    }
 }
